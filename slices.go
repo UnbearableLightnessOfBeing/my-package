@@ -9,3 +9,11 @@ func Filter[T interface{}](s []T, compareFunc func(T) bool) []T {
   } 
   return res
 }
+
+func Map[T interface{}, R interface{}](s []T, callback func(T) R) []R {
+  var result []R 
+  for _, v := range s {
+    result = append(result, callback(v))
+  }
+  return result
+}
