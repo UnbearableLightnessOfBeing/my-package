@@ -1,7 +1,8 @@
 package mypackage_test
 
 import (
-	"fmt"
+	"slices"
+	"sync"
 	"testing"
 
 	mypackage "github.com/unbearablelightnessofbeing/my-package"
@@ -26,10 +27,15 @@ func checkSetCases[T comparable](t *testing.T, cases []SetTestCase[T]) {
       t.Fatalf("set should have element %v, set: %v", testCase.Has, set)
     }
 
-    elemsStr := fmt.Sprintf("%v", set.GetElements())
-    expectedStr := fmt.Sprintf("%v", testCase.ExpectedValues)
-    if elemsStr != expectedStr {
-      t.Fatalf("values in set do not match:\nexpected:\n\t%v\ngot:\n\t%v", elemsStr, expectedStr)
+    res := set.GetElements()
+    if len(testCase.ExpectedValues) != len(res) {
+      t.Fatalf("values in set do not match:\nexpected:\n\t%v\ngot:\n\t%v", res, testCase.ExpectedValues)
+    }
+
+    for _, v := range res {
+      if !slices.Contains(testCase.ExpectedValues, v) {
+        t.Fatalf("values in set do not match:\nexpected:\n\t%v\ngot:\n\t%v", res, testCase.ExpectedValues)
+      }
     }
 	}
 }
@@ -71,11 +77,28 @@ func TestSet(t *testing.T) {
   checkSetCases(t, cases)
 }
 
-// func TestAsyncSet(t *testing.T) {
-//   set := mypackage.NewSet[string]()
-//
-//   go func() {
-//     set.Add("test_1")
-//     set.Add("test_2")
-//   }()
-// }
+func TestAsyncSet(t *testing.T) {
+  set := mypackage.NewSet[string]()
+
+  values := []string{"test_1","test_2","test_3","test_4"}
+
+  wg := &sync.WaitGroup{}
+  wg.Add(4)
+
+  for _, v := range values {
+    go func() {
+      defer wg.Done()
+      set.Add(v)
+    }()
+  }
+
+  wg.Wait()
+
+  result := set.GetElements()
+
+  for _, v := range result {
+    if !slices.Contains(values, v) {
+      t.Fatalf("values in set do not match:\nexpected:\n\t%v\ngot:\n\t%v", result, values)
+    }
+  }
+}
