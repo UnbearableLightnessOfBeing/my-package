@@ -1,10 +1,10 @@
-package mypackage_test
+package myutils_test
 
 import (
 	"sync"
 	"testing"
 
-	mypackage "github.com/unbearablelightnessofbeing/my-package"
+	mypackage "github.com/unbearablelightnessofbeing/myutils"
 )
 
 type CacheTestCase[T interface{}] struct {

@@ -1,3 +1,3 @@
-module github.com/unbearablelightnessofbeing/my-package
+module github.com/unbearablelightnessofbeing/myutils
 
 go 1.22.2

@@ -1,11 +1,11 @@
-package mypackage_test
+package myutils_test
 
 import (
 	"slices"
 	"sync"
 	"testing"
 
-	mypackage "github.com/unbearablelightnessofbeing/my-package"
+	mypackage "github.com/unbearablelightnessofbeing/myutils"
 )
 
 type SetTestCase[T comparable] struct {

@@ -1,10 +1,10 @@
-package mypackage_test
+package myutils_test
 
 import (
 	"strings"
 	"testing"
 
-	mypackage "github.com/unbearablelightnessofbeing/my-package"
+	mypackage "github.com/unbearablelightnessofbeing/myutils"
 )
 
 type FilterTestCase[T interface{}] struct {

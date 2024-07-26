@@ -1,4 +1,4 @@
-package mypackage
+package myutils
 
 // Filter filters out elements in a slice. An element is preserved when
 //the callback function called with the element as a parameter returns true.
